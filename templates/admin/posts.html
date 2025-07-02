@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}All Posts{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='posts.css') }}">
+{% endblock %}
+
+
+{% block content %}
+  <h2 class="page-title">All Posts</h2>
+
+  {% if posts %}
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Tags</th>
+          <th>Author</th>
+          <th>Published</th>
+          <th>Approved</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+          <tr>
+            <td>{{ post.title }}</td>
+            <td>{{ post.tags }}</td>
+            <td>{{ post.author.username }}</td>
+            <td>
+              {% if post.is_published %}
+                <span class="status published">Yes</span>
+              {% else %}
+                <span class="status not-published">No</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if post.is_approved %}
+                <span class="status approved">Yes</span>
+              {% else %}
+                <span class="status not-approved">No</span>
+              {% endif %}
+            </td>
+            <td>{{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>
+              <a href="{{ url_for('admin.delete_post', post_id=post.id) }}"
+                 class="btn btn-delete"
+                 onclick="return confirm('Are you sure you want to delete this post?')">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="no-posts">No posts available.</p>
+  {% endif %}
+
+  <div class="admin-links">
+    <a href="{{ url_for('admin.view_users') }}" class="btn btn-secondary">View Users</a>
+    <a href="{{ url_for('admin.pending_posts') }}" class="btn btn-primary">Approve Pending Posts</a>
+  </div>
+{% endblock %}

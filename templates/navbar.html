@@ -1,0 +1,20 @@
+<nav class="navbar">
+    <a href="{{ url_for('public.home') }}">Home</a>
+
+    {% if session.get('role') == 'publisher' %}
+        <a href="{{ url_for('publisher.create_post') }}">Add Post</a>
+        <a href="{{ url_for('publisher.dashboard') }}">My Posts</a>
+    {% endif %}
+
+    {% if session.get('role') == 'admin' %}
+        <a href="{{ url_for('admin.view_users') }}">Admin Panel</a>
+    {% endif %}
+
+    {% if session.get('user_id') %}
+        <a href="{{ url_for('user.view_profile') }}">Profile</a>
+        <a href="{{ url_for('user.logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('user.login') }}">Login</a>
+        <a href="{{ url_for('user.register') }}">Register</a>
+    {% endif %}
+</nav>

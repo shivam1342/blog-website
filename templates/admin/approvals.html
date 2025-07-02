@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Pending Approvals{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='approvals.css') }}">
+{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Pending Post Approvals</h2>
+
+{% if posts %}
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Publisher</th>
+                <th>Published</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.author.username }}</td>
+                <td>
+                    {% if post.is_published %}
+                        <span class="status published">Yes</span>
+                    {% else %}
+                        <span class="status not-published">No</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('admin.approve_post', post_id=post.id) }}" class="btn btn-approve">Approve</a>
+                    <a href="{{ url_for('admin.disapprove_post', post_id=post.id) }}" class="btn btn-disapprove" onclick="return confirm('Are you sure?')">Disapprove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="no-posts">No posts awaiting approval.</p>
+{% endif %}
+{% endblock %}

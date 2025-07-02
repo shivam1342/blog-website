@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='view_post.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<div class="view-post-container">
+    <h2 class="view-post-title">{{ post.title }}</h2>
+    
+    <p class="view-post-meta">
+        <strong>Author:</strong> {{ post.author.username }} | 
+        <strong>Created:</strong> {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}
+    </p>
+    
+    <div class="view-post-tags">
+        <strong>Tags:</strong> {{ post.tags }}
+    </div>
+    
+    <div class="view-post-content">
+        <p class="post-content">{{ post.content|safe }}</p>
+    </div>
+
+    <div class="view-post-likes-comments">
+        <form method="POST" action="{{ url_for('publisher.like_post', post_id=post.id) }}">
+            <button type="submit" class="btn-like">
+                {% if has_liked %}
+                    Unlike ({{ post.likes.count() }})
+                {% else %}
+                    Like ({{ post.likes.count() }})
+                {% endif %}
+            </button>
+        </form>
+
+        <h3>Comments ({{ post.comments.count() }})</h3>
+        <ul class="comment-list">
+            {% for comment in post.comments.order_by(Comment.timestamp.desc()).all() %}
+                <li>
+                    <strong>
+                        {% if comment.user %}
+                            {{ comment.user.username }}:
+                        {% else %}
+                            Anonymous:
+                        {% endif %}
+                    </strong>
+ 
+                    {{ comment.content }} 
+                    <span class="timestamp">({{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }})</span>
+
+                </li>
+            {% endfor %}
+        </ul>
+        <form method="POST" action="{{ url_for('publisher.comment_post', post_id=post.id) }}">
+            <textarea name="comment" placeholder="Write a comment..." required></textarea><br>
+            <button type="submit">Post Comment</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

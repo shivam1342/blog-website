@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+  <h2 class="profile-heading">My Profile</h2>
+
+  <div class="profile-info">
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Role:</strong> {{ user.role.value }}</p>
+    <p><strong>Full Name:</strong> {{ profile.name }}</p>
+    <p><strong>Email:</strong> {{ profile.email }}</p>
+    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+    <p><strong>Gender:</strong> {{ profile.gender }}</p>
+  </div>
+
+  <div class="profile-actions">
+    <a href="{{ url_for('user.edit_profile') }}" class="btn-edit-profile">Edit Profile</a>
+    <a href="{{ url_for('user.change_password') }}" class="btn-change-password">Change Password</a>
+  </div>
+</div>
+{% endblock %}
