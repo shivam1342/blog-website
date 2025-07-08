@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="post-detail container">
+  <h2 class="post-title">{{ post.title }}</h2>
+
+  <p class="post-meta">
+    By <strong>{{ post.author.username }}</strong> • 
+    <span>{{ post.date_created.strftime('%b %d, %Y %H:%M') }}</span>
+  </p>
+
+  <hr style="margin: 1rem 0;">
+
+  <div class="post-content">
+    {{ post.content | safe }}
+  </div>
+
+  {% if current_user.is_authenticated and current_user.id == post.author.id %}
+    <div style="margin-top: 1.5rem;">
+      <a href="{{ url_for('posts.edit_post', post_id=post.id) }}" class="btn btn-edit">Edit Post</a>
+    </div>
+  {% endif %}
+
+  <!-- Like Section -->
+  <div style="margin-top: 1.5rem;">
+    <form method="POST" action="{{ url_for('posts.toggle_like', post_id=post.id) }}">
+      <button type="submit" class="btn btn-outline-primary">
+         {{ post.likes | length }} Like{{ post.likes|length != 1 and 's' or '' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- Comment Section -->
+  <div class="comments-section" style="margin-top: 2rem;">
+    <h4>Comments ({{ post.comments | length }})</h4>
+    
+    {% for comment in post.comments %}
+      <div class="comment" style="margin-bottom: 1rem;">
+        <p><strong>{{ comment.author.username }}</strong> 
+        <small>{{ comment.date_created.strftime('%b %d, %Y %H:%M') }}</small></p>
+        <p>{{ comment.text }}</p>
+      </div>
+    {% endfor %}
+
+    {% if current_user.is_authenticated %}
+      <form method="POST" action="{{ url_for('posts.add_comment', post_id=post.id) }}">
+        <div class="form-group">
+          <textarea name="comment" rows="3" class="form-control" placeholder="Write a comment..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Comment</button>
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

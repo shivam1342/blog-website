@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='view_post.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="view-post-container">
+    <h2 class="view-post-title">{{ post.title }}</h2>
+
+    <p class="view-post-meta">
+        <strong>Author:</strong> {{ post.author.username }} | 
+        <strong>Created:</strong> {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}
+    </p>
+
+    <div class="view-post-tags">
+        <strong>Tags:</strong> {{ post.tags }}
+    </div>
+
+    <div class="view-post-content">
+        <p class="post-content">{{ post.content|safe }}</p>
+    </div>
+
+    <div class="view-post-likes-comments">
+        <!-- Like Button -->
+        <button id="like-btn" data-post-id="{{ post.id }}" class="btn-like">
+            {% if has_liked %}
+                Unlike (<span id="like-count">{{ post.likes.count() }}</span>)
+            {% else %}
+                Like (<span id="like-count">{{ post.likes.count() }}</span>)
+            {% endif %}
+        </button>
+
+        <!-- Comments -->
+        <h3>Comments (<span id="comment-count">{{ post.comments.count() }}</span>)</h3>
+        <ul class="comment-list" id="comment-list">
+            {% for comment in post.comments.order_by(Comment.timestamp.desc()).all() %}
+                <li>
+                    <strong>
+                        {% if comment.user %}
+                            {{ comment.user.username }}:
+                        {% else %}
+                            Anonymous:
+                        {% endif %}
+                    </strong>
+                    {{ comment.content }}
+                    <span class="timestamp">({{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }})</span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Comment Form -->
+        <form id="comment-form">
+            <textarea name="comment" id="comment-input" placeholder="Write a comment..." required></textarea><br>
+            <button type="submit">Post Comment</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const postId = {{ post.id }};
+
+    // Like Button
+    const likeBtn = document.getElementById('like-btn');
+    likeBtn.addEventListener('click', () => {
+        fetch(`/like/${postId}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.likes !== undefined) {
+                    document.getElementById('like-count').innerText = data.likes;
+                    likeBtn.innerHTML = likeBtn.innerHTML.includes('Unlike') 
+                        ? `Like (<span id="like-count">${data.likes}</span>)`
+                        : `Unlike (<span id="like-count">${data.likes}</span>)`;
+                }
+            });
+    });
+
+    // Comment Form
+    const commentForm = document.getElementById('comment-form');
+    commentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const commentInput = document.getElementById('comment-input');
+        const commentText = commentInput.value.trim();
+        if (!commentText) return;
+
+        fetch(`/comment/${postId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ comment: commentText })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.comment_text) {
+                const commentList = document.getElementById('comment-list');
+                const newItem = document.createElement('li');
+                newItem.innerHTML = `
+                    <strong>${data.username || 'Anonymous'}:</strong>
+                    ${data.comment_text}
+                    <span class="timestamp">(${data.timestamp})</span>
+                `;
+                commentList.insertBefore(newItem, commentList.firstChild);
+                commentInput.value = '';
+                document.getElementById('comment-count').innerText =
+                    parseInt(document.getElementById('comment-count').innerText) + 1;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

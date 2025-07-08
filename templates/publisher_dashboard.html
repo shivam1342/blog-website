@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}My Posts{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='publisher_dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="my-posts container">
+  <h2 class="page-heading">My Posts</h2>
+
+  {% if posts %}
+    <table class="post-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Tags</th>
+          <th>Status</th>
+          <th>Approval</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td>{{ post.title }}</td>
+          <td>{{ post.tags }}</td>
+          <td>
+            {% if post.is_published %}
+              <span class="badge badge-success">Published</span>
+            {% else %}
+              <span class="badge badge-warning">Draft</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if post.is_approved %}
+              <span class="badge badge-success">Approved</span>
+            {% else %}
+              <span class="badge badge-danger">Pending</span>
+            {% endif %}
+          </td>
+          <td class="actions">
+            <a href="{{ url_for('publisher.edit_post', post_id=post.id) }}" class="link">Edit</a> |
+            <a href="{{ url_for('publisher.delete_post', post_id=post.id) }}" class="link" onclick="return confirm('Delete this post?')">Delete</a>
+            {% if not post.is_published %}
+              | <a href="{{ url_for('publisher.publish_post', post_id=post.id) }}" class="link">Publish</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="no-posts-message">You haven't written any posts yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

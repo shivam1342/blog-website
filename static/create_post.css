@@ -1,0 +1,158 @@
+/* Container for the form */
+.post-form-container {
+    background-color: #ffffff;
+    padding: 40px 50px;
+    margin: 40px auto;
+    border-radius: 12px;
+    max-width: 800px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Form Heading */
+.form-heading {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 35px;
+    font-weight: 700;
+    color: #1c1c1e;
+}
+
+/* Group spacing */
+.post-form .form-group {
+    margin-bottom: 24px;
+}
+
+/* Label Styling */
+.post-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Input Fields */
+.post-form input[type="text"],
+.post-form input[type="email"],
+.post-form input[type="password"],
+.post-form textarea,
+.post-form select {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: #212529;
+    background-color: #f9f9f9;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.post-form input::placeholder,
+.post-form textarea::placeholder {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+/* Focus State */
+.post-form input:focus,
+.post-form textarea:focus,
+.post-form select:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+/* Checkbox Section */
+.post-form .form-check {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 30px;
+}
+
+.post-form .form-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.post-form .form-check label {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Action Buttons */
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 10px 22px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Success Button */
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    box-shadow: 0 3px 8px rgba(40, 167, 69, 0.3);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    box-shadow: 0 3px 8px rgba(108, 117, 125, 0.3);
+}
+
+/* Quill Editor */
+.quill-editor {
+    background-color: #fff;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    height: 240px;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .post-form-container {
+        padding: 30px 20px;
+    }
+
+    .form-heading {
+        font-size: 1.6rem;
+    }
+
+    .button-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
