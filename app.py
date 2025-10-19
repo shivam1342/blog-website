@@ -8,6 +8,10 @@ from routes.post_routes import publisher_bp
 from routes.home_routes import public_bp
 from routes.admin_routes import admin_bp
 from flask_mailman import Mail
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -15,14 +19,14 @@ app = Flask(__name__)
 app.secret_key = 'sa;foibhnmrsdfig'
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] =os.getenv("DATABASE_URL") 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.update(
     MAIL_SERVER = 'smtp.gmail.com',
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
-    MAIL_USERNAME = 'mukundsoni649@gmail.com',
-    MAIL_PASSWORD = 'izhbnufezpfwreno'
+    MAIL_USERNAME = 'zerdragneel400@gmail.com',
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 )
 
 mail = Mail(app)

@@ -1,0 +1,136 @@
+/*
+============================================
+==        MODERN BLOG UI/UX STYLES        ==
+============================================
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lora', serif;
+    background-color: #FDF8F5; /* Soft Off-White */
+    color: #333;
+    line-height: 1.8;
+    font-size: 18px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    color: #4A4A4A; /* Darker Grey for Headings */
+    margin-bottom: 1rem;
+}
+
+a {
+    color: #6A9C89; /* Sage Green */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #4F7A65; /* Darker Sage Green */
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #FDF8F5;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #EAEAEA;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #D98C7E; /* Muted Terracotta */
+}
+
+.navbar .nav-links a {
+    margin-left: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+}
+
+/* Blog Post Cards */
+.post-card {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.post-card h2 {
+    margin-top: 0;
+}
+
+.post-card .post-meta {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: #6A9C89; /* Sage Green */
+    color: #FFFFFF;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #4F7A65; /* Darker Sage Green */
+    color: #FFFFFF;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #EAEAEA;
+    border-radius: 8px;
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 4rem;
+    background-color: #F8F4F1;
+    border-top: 1px solid #EAEAEA;
+    color: #888;
+}
