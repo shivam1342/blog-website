@@ -18,18 +18,17 @@ app = Flask(__name__)
 
 app.secret_key = 'sa;foibhnmrsdfig'
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-if DATABASE_URL is None:
-    raise ValueError("DATABASE_URL not set on Vercel")
-
-if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+pg8000://", 1)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+# DATABASE_URL = os.getenv("DATABASE_URL")
+# if DATABASE_URL is None:
+#     raise ValueError("DATABASE_URL not set on Vercel")
 
 
+# DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+pg8000://", 1)
+# app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.update(
     MAIL_SERVER = 'smtp.gmail.com',
@@ -43,7 +42,7 @@ mail = Mail(app)
 
 
 db.init_app(app)
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
