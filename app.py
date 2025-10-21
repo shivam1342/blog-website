@@ -2,7 +2,7 @@ from flask import Flask, redirect, url_for
 from flask_login import LoginManager
 from models import db
 from models.login_info import LoginInfo as User 
-
+from flask_migrate import Migrate
 from routes.user_routes import user_bp
 from routes.post_routes import publisher_bp
 from routes.home_routes import public_bp
@@ -33,7 +33,7 @@ mail = Mail(app)
 
 
 db.init_app(app)
-
+migrate = Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -55,6 +55,10 @@ def index():
     return redirect(url_for('public.home')) 
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
+    # from models import *
+    # from models.login_info import LoginInfo
+    # from models.post import Post, Like, Comment
+    # from models.user_profile import UserProfile
+    # with app.app_context():
+    #     db.create_all()
     app.run(debug=True)

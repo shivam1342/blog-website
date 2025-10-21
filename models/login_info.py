@@ -17,5 +17,9 @@ class LoginInfo(db.Model):
 
     role = db.Column(db.Enum(UserRole), nullable=False)
 
-    profile = db.relationship('UserProfile', backref='login', uselist=False)
     posts = db.relationship('Post', backref='author', lazy=True)
+    profile = db.relationship('UserProfile', backref='login', uselist=False)
+    comments = db.relationship('Comment', backref='user', lazy=True, cascade="all, delete-orphan")
+    likes = db.relationship('Like', backref='user', lazy=True, cascade="all, delete-orphan")
+    
+    
