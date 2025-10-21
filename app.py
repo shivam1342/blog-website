@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.secret_key = 'sa;foibhnmrsdfig'
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] =os.getenv("DATABASE_URL") 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL").replace("postgres://", "postgresql+pg8000://")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.update(
     MAIL_SERVER = 'smtp.gmail.com',
